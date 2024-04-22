@@ -1,37 +1,37 @@
-import ReviewSlider from "./ReviewSlider";
-import '../style/Review.css';
 import React, { useState, useEffect } from 'react';
+import ReviewsSlider from "./ReviewSlider";
+import '../style/Review.css';
 
 function Reviews() {
   const [reviews, setReviews] = useState([]);
 
   useEffect(() => {
-    const fetchProducts = async () => {
+    const fetchReviews = async () => {
       try {
-        const response = await fetch('http://localhost:8000/BooklandAPI/review');
+        const response = await fetch('http://127.0.0.1:8000/BooklandAPI/review');
         if (!response.ok) {
-          throw new Error('response not ok');
+          throw new Error('Failed to fetch reviews');
         }
         const data = await response.json();
         setReviews(data);
       } catch (error) {
-        console.error('error fetching products:', error);
+        console.error('Error fetching reviews:', error);
       }
     };
 
-    fetchProducts();
+    fetchReviews();
   }, []);
 
   const renderReviews = (
     <section id='review-page'>
       <div className="container">
         <p className="section-title">WHAT OUR CUSTOMERS ARE SAYING</p>
-        <ReviewSlider data={reviews}></ReviewSlider>
-      </div>     
-  </section>
-  )
+        <ReviewsSlider data={reviews} />
+      </div>
+    </section>
+  );
 
-  return renderReviews
+  return renderReviews;
 }
 
 export default Reviews;
